@@ -1,10 +1,10 @@
 .msw_popup {
 	display: grid;
-    padding: 0.5em;
-    min-height: 100%;
+	padding: 0.5em;
+	min-height: 100%;
 }
 .msw_popup:hover {
-    background-color: var(--ac-style-color-hoveredBackground);
+	background-color: var(--ac-style-color-hoveredBackground);
 }
 .msw_popup .mes, .msw_popup .mes_text {
 	padding: 0;
