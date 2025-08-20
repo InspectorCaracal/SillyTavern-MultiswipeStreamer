@@ -34,9 +34,6 @@ function selectSwipe(swipe_id) {
 		// don't swap swipes until we're all done
 		return;
 	}
-	// FIXME: this will only work if you're multiswiping a fresh message.
-	// otherwise, it "works" but sets the current swipe to the wrong swipe #
-	// this causes it to load the wrong swipe in on chat reload
 	console.log('choosing swipe');
 	const chat = getContext().chat;
 	const mes_id = chat.length - 1;
@@ -77,6 +74,10 @@ function handleStream(text) {
 		return;
 	}
 	if (streamingProcessor.swipes.length > 0) {
+		// find offset of message swipes for swipe selection
+		const mes = getContext().chat.slice(-1)[0];
+		// gotta account for the fact that the "main" generation isn't counted as a streaming swipe
+		const swipeOffset = mes.swipes.length - (streamingProcessor.swipes.length+1);
 		if (!dlg) {
 			const Popup = getContext().Popup;
 			dom = document.createElement('div');
@@ -109,8 +110,7 @@ function handleStream(text) {
 				el.append(inner);
 				dom.append(el);
 				$(el).on('click', (e) => {
-					// NOTE: this needs to be adjusted to account for pre-existing swipes
-					selectSwipe(idx);
+					selectSwipe(swipeOffset+idx);
 				});
 			}
 			swipes[idx].innerHTML = getContext().messageFormatting(swipe, 'stream', false, false, -1);
