@@ -109,6 +109,7 @@ function handleStream(text) {
 				el.append(inner);
 				dom.append(el);
 				$(el).on('click', (e) => {
+                    // NOTE: this needs to be adjusted to account for pre-existing swipes
                     selectSwipe(idx);
                 });
 			}
